@@ -1,5 +1,6 @@
 <template>
   <div class="pokemon-card">
+      <slot name="header"></slot>
       <div class="background-wrapper">
           <div v-for="type in pokemon.types" :key="type" :style="{'background-color': TYPE_COLOR[type]}"></div>
       </div>
@@ -8,7 +9,8 @@
           <img class="pokemon-image" :src="pokemon.image" alt="bulbasaur">
       </div>
       <div class="pokemon-title">
-          {{ pokemon.name }}
+          <!-- Este es el slot por defecto -->
+          <slot>{{ pokemon.name }}</slot>
       </div>
   </div>
 </template>

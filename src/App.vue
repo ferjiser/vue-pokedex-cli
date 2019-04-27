@@ -34,7 +34,9 @@
                     :key="pokemon.name"
                     :pokemon="pokemon"
                     @remove="removePokemon"
-                ></pokemon-card>
+                >
+                <template #header>Fer</template>
+                </pokemon-card>
             </article>
         </main>
     </div>
