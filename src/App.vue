@@ -6,10 +6,7 @@
     <div class="main-content" id="app" v-cloak>
         <!-- Pokemon Filters -->
         <aside class="pokedex-filters">
-            <div class="nice-input-wrapper">
-                <input class="nice-input" type="text" placeholder="Search by name" v-model="searchText">
-                <span class="focus-border"><i></i></span>
-            </div>
+            <NiceInput v-model="searchText"/>
             <!-- Checkboxes -->
             <p class="checkboxes-list-title">Type</p>
             <div class="checkboxes-list">
@@ -32,7 +29,6 @@
                     v-for="pokemon in filteredPokemons"
                     :key="pokemon.name"
                     :pokemon="pokemon"
-                    :type-color="TYPE_COLOR"
                     @remove="removePokemon"
                 ></pokemon-card>
             </article>
@@ -42,22 +38,15 @@
 </template>
 
 <script>
+import {TYPE_COLOR} from './constants'
+import NiceInput from './components/NiceInput'
 import PokemonCard from './components/PokemonCard'
 
 export default {
     data() {
         return {
             searchText: '',
-            TYPE_COLOR: {
-                "grass": "#78C850",
-                "poison": "#A040A0",
-                "fire": "#F08030",
-                "flying": "#A890F0",
-                "water": "#6890F0",
-                "bug": "#A8B820",
-                "normal": "#A8A878",
-                "electric": "#F8D030",
-            },
+            TYPE_COLOR,
             selectedPokemonTypes: [],
             pokemons: [],
         };
@@ -70,7 +59,7 @@ export default {
                     if (this.selectedPokemonTypes.length === 0) return true; // no checked checkbox means no filter
                     return pokemon.types
                         .find(type => this.selectedPokemonTypes.includes(type));
-                });;
+                });
         },
     },
     methods: {
@@ -86,6 +75,7 @@ export default {
     },
     components: {
         PokemonCard,
+        NiceInput
     },
 }
 </script>
@@ -161,98 +151,6 @@ header, article, nav, aside {
     flex-wrap: wrap;
     overflow-y: auto;
 }
-
-/* Pokemon card */
-.pokemon-card {
-    margin: 5px;
-    position: relative;
-    height: 170px;
-    width: 170px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    overflow: hidden;
-}
-
-.pokemon-card:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.pokemon-card .background-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    z-index: -1;
-}
-
-.pokemon-card .background-wrapper div {
-    flex-grow: 1;
-}
-
-.pokemon-card .remove-pokemon {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-}
-
-.pokemon-card:hover .remove-pokemon {
-    display: inline-block;
-}
-
-.pokemon-card .remove-pokemon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.pokemon-card .image-wrapper {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.pokemon-card .pokemon-image {
-    height: 110px;
-}
-
-.pokemon-card .pokemon-title {
-    height: 40px;
-    background-color: rgba(0,0,0,.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: capitalize;
-}
-/* End Pokemon card */
-
-/* Nice input */
-.nice-input-wrapper {
-    position: relative;
-}
-.nice-input{
-    font: 15px/24px 'Muli', sans-serif;
-    color: #333;
-    width: 100%;
-    box-sizing: border-box;
-    letter-spacing: 1px;
-}
-.nice-input{border: 1px solid #ccc; padding: 7px 14px 9px; transition: 0.4s;}
-.nice-input ~ .focus-border:before,
-.nice-input ~ .focus-border:after{content: ""; position: absolute; top: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.3s;}
-.nice-input ~ .focus-border:after{top: auto; bottom: 0; left: auto; right: 0;}
-.nice-input ~ .focus-border i:before,
-.nice-input ~ .focus-border i:after{content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.4s;}
-.nice-input ~ .focus-border i:after{left: auto; right: 0; top: auto; bottom: 0;}
-.nice-input:focus ~ .focus-border:before,
-.nice-input:focus ~ .focus-border:after{width: 100%; transition: 0.3s;}
-.nice-input:focus ~ .focus-border i:before,
-.nice-input:focus ~ .focus-border i:after{height: 100%; transition: 0.4s;}
-/* End Nice input */
 
 /* Nice checkbox */
 .md-checkbox {
