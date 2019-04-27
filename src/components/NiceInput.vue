@@ -1,12 +1,17 @@
 <template>
     <div class="nice-input-wrapper">
-        <input class="nice-input" type="text" placeholder="Search by name" :value="value" @input="e => $emit('input', e.target.value)">
+        <input 
+            class="nice-input" 
+            v-bind="$attrs"
+            :value="value" @input="e => $emit('input', e.target.value)"
+        >
         <span class="focus-border"><i></i></span>
     </div>
 </template>
 <script>
 
 export default {
+   inheritAttrs:false,
    props: ['value']
 }
 </script>

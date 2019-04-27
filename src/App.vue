@@ -6,7 +6,11 @@
     <div class="main-content" id="app" v-cloak>
         <!-- Pokemon Filters -->
         <aside class="pokedex-filters">
-            <NiceInput v-model="searchText"/>
+            <NiceInput 
+                v-model="searchText" 
+                placeholder="my custom placeholder" 
+                type="text"
+            />
             <!-- Checkboxes -->
             <p class="checkboxes-list-title">Type</p>
             <div class="checkboxes-list">
