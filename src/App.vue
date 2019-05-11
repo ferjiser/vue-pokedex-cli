@@ -23,21 +23,18 @@
                     </label>
                 </div>
             </div>
+            <button @click="random">REORDENAR</button>
         </aside>
 
         <!-- Pokemons list -->
         <main class="main-view">
-            <article class="pokemons-list">
+            <transition-group tag="article" name="slide" class="pokemons-list">
                 <!-- Pokemon Card -->
-                <pokemon-card
-                    v-for="pokemon in filteredPokemons"
+                <pokemon-card v-for="pokemon in filteredPokemons"
                     :key="pokemon.name"
                     :pokemon="pokemon"
-                    @remove="removePokemon"
-                >
-                <template #header>Fer</template>
-                </pokemon-card>
-            </article>
+                    @remove="removePokemon"/>
+            </transition-group>
         </main>
     </div>
   </div>  
@@ -73,6 +70,9 @@ export default {
             this.pokemons = this.pokemons
                 .filter(pokemon => pokemon !== pokemonToDelete);
         },
+        random(){
+          this.pokemons.sort(()=> Math.random()-0.5) 
+      }
     },
     created() { // Component Lyfecycle Diagram https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
         fetch('https://api.jsonbin.io/b/5ab37f77989617146bd6eb29') 
@@ -221,4 +221,19 @@ header, article, nav, aside {
   background: rgba(0, 0, 0, 0.26);
 }
 /* End Nice checkbox */
+.slide-enter{
+    transform: translateX(500px);
+}
+.slide-enter-active{
+    transition: all 1s
+}
+.slide-leave-to{
+    transform: translateX(-5000px);
+}
+.slide-leave-active{
+    transition: all 0.5s
+}
+.slide-move {   
+    transition: all 1s
+}
 </style>
